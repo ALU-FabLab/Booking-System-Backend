@@ -37,6 +37,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # External Apps
+    'rest_framework',
+    'drf_spectacular',
+
+
+    # Internal Apps
+    'core',
+    'users',
+    'bookings',
+    'equipments',
+    'notifications',
 ]
 
 MIDDLEWARE = [
@@ -121,3 +133,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'users.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'FabLab Booking System API',
+    'DESCRIPTION': 'Project description',
+    'VERSION': '0.0.1',
+    'SERVE_INCLUDE_SCHEMA': True,
+    # OTHER SETTINGS
+}

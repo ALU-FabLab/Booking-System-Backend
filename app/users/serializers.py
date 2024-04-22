@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = get_user_model()
-        excluide = (
+        exclude = (
             'is_superuser',
             'date_modified',
         )

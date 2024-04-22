@@ -32,12 +32,12 @@ urlpatterns = [
         name='api-schema'
     ),
     path(
-        'api/docs/sche',
+        'api/docs/swagger/',
         SpectacularSwaggerView.as_view(url_name='api-schema'),
         name='api-docs'
     ),
     path(
-        'api/docs/',
+        'api/docs/redoc/',
         SpectacularRedocView.as_view(url_name='api-schema'),
         name='api-docs'
     )

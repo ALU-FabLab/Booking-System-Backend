@@ -17,7 +17,7 @@ git add "$file_name"
 
 git commit -m "$commit_message"
 
-git push origin main  # Change 'main' to your branch name to contribute
+git push origin staging  # Change 'main' to your branch name to contribute
 
 if [ $? -eq 0 ]; then
     echo -e "\e[32mPush successful!\e[0m"

@@ -3,6 +3,7 @@ LABEL maintainer="Abimbola Ronald"
 
 #Makes the output of the python script to be unbuffered - makes you see your logs in real time
 ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
 
 COPY ./requirements.txt /tmp/requirements.txt
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
@@ -33,3 +34,5 @@ RUN python -m venv /py && \
 
 ENV PATH="/py/bin:$PATH"
 USER django-user
+
+ENTRYPOINT [ "gunicorn", "app.wsgi" ]

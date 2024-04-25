@@ -18,7 +18,9 @@ class UserAdmin(BaseUserAdmin):
         'id', 'email', 'first_name', 'last_name',
         'is_active', 'is_staff', 'intake',
     ]
+    search_fields = ['email', 'first_name', 'last_name']
     readonly_fields = ['last_login', 'date_joined', 'date_modified']
+
     fieldsets = (
         (
             None,
@@ -39,7 +41,7 @@ class UserAdmin(BaseUserAdmin):
                     'about_me',
                     'intake',
                     'course',
-                    'professional_role',
+                    'profession',
                 )
             }
         ),
@@ -64,6 +66,7 @@ class UserAdmin(BaseUserAdmin):
             }
         )
     )
+
     add_fieldsets = (
         (
             None,
@@ -79,10 +82,73 @@ class UserAdmin(BaseUserAdmin):
                     'about_me',
                     'intake',
                     'course',
-                    'professional_role',
+                    'profession',
                     'is_staff',
                     'is_active',
                     'is_superuser',
+                )
+            }
+        ),
+    )
+
+
+@admin.register(models.Course)
+class CourseAdmin(admin.ModelAdmin):
+    """
+    Config for Course Admin View
+    """
+    list_display = ['id', 'name', 'code', 'duration']
+    search_fields = ['name', 'code', 'duration']
+    ordering = ['id']
+
+    fieldsets = (
+        (
+            translate_text('Course Information'),
+            {
+                'fields': (
+                    'name',
+                    'code',
+                    'duration',
+                    'description',
+                )
+            }
+        ),
+    )
+
+    add_fieldsets = (
+        (
+            None,
+            {
+                'classes': ('wide',),
+                'fields': (
+                    'name',
+                    'code',
+                    'duration',
+                    'description',
+                )
+            }
+        ),
+    )
+
+
+@admin.register(models.Intake)
+class IntakeAdmin(admin.ModelAdmin):
+    """
+    Config for Intake Admin View
+    """
+    list_display = ['id', 'name', 'start_date', 'end_date']
+    search_fields = ['name']
+    ordering = ['id']
+
+    add_fieldsets = (
+        (
+            None,
+            {
+                'classes': ('wide',),
+                'fields': (
+                    'name',
+                    'start_date',
+                    'end_date'
                 )
             }
         ),

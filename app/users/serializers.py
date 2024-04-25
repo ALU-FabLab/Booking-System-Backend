@@ -3,6 +3,7 @@ Serializers for the user API View
 """
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from users.models import Intake, Course # noqa
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,8 +13,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         exclude = (
+            'groups',
+            'is_staff',
+            'is_active',
+            'last_login',
             'is_superuser',
             'date_modified',
+            'user_permissions',
         )
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
@@ -21,7 +27,9 @@ class UserSerializer(serializers.ModelSerializer):
         """
         Create a user with encrypted password and returns the user instance
         """
-        return get_user_model().objects.create_user(**validated_data)
+        return get_user_model().objects.create_user(
+            **validated_data, is_active=False
+        )
 
     def update(self, instance, validated_data):
         """

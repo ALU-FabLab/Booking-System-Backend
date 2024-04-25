@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Docker compose for staging on render
+docker-compose.yml
+
 # Distribution / packaging
 .Python
 build/

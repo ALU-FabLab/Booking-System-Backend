@@ -48,9 +48,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         'Intake', on_delete=models.SET_NULL, null=True, blank=True)
     course = models.ForeignKey(
         'Course', on_delete=models.SET_NULL, null=True, blank=True)
-    professional_role = models.CharField(
-        max_length=255, blank=True,
-        help_text="Your role at your current company."
+    profession = models.CharField(
+        max_length=255, blank=True, help_text="Your Profession"
     )
 
     # Pictures are coming soon
@@ -83,16 +82,16 @@ class Course(models.Model):
     """
     Course model
     """
-    title = models.CharField(max_length=255)
+    name = models.CharField(max_length=255)
     code = models.CharField(max_length=10, unique=True)
-    description = models.TextField()
-    duration = models.CharField(max_length=255)
+    description = models.TextField(blank=True, )
+    duration = models.FloatField(help_text="Duration in years")
 
     date_added = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.title
+        return self.name
 
 
 class Intake(models.Model):

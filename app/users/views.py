@@ -61,8 +61,7 @@ class ActivateAccountAPIView(APIView):
         if myuser is not None and generate_token.check_token(myuser, token):
             myuser.is_active = True
             myuser.save()
-            # Change to frontend signin url
-            return redirect('https://google.com')
+            return redirect('https://booking-system-frontend-alpha.vercel.app/signin')
         else:
             # Change to a frontend page that says activation link is invalid
             # And provide a link to resend the activation link to their email

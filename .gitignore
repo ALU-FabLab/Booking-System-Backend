@@ -8,6 +8,8 @@ __pycache__/
 
 # Docker compose for staging on render
 docker-compose.yml
+Dockerfile
+.dockerignore
 
 # Distribution / packaging
 .Python

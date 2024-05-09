@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External Apps
+    'corsheaders',
     'rest_framework',
     'drf_spectacular',
     'rest_framework_simplejwt',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -164,3 +166,7 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': True,
     # OTHER SETTINGS
 }
+
+CORS_ALLOWED_ORIGINS = [
+    'https://booking-system-frontend-alpha.vercel.app/'
+]

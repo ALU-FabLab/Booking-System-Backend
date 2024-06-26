@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,13 +32,15 @@ SECRET_KEY = 'django-insecure-uqt)vhr8^&j35*j%@l(0g!2xd*eqq+h6%euf2w9@l^6-!a8e02
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -44,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External Apps
+    'corsheaders',
     'rest_framework',
     'drf_spectacular',
     'rest_framework_simplejwt',
@@ -53,18 +58,21 @@ INSTALLED_APPS = [
     'core',
     'users',
     'bookings',
-    'equipments',
+    'inventory',
     'notifications',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls'
@@ -89,14 +97,19 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+#https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+    }
 
 
 # Password validation
@@ -134,6 +147,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = 'media/'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -154,4 +170,14 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '0.0.1',
     'SERVE_INCLUDE_SCHEMA': True,
     # OTHER SETTINGS
+}
+
+CORS_ALLOWED_ORIGINS = [
+    'https://booking-system-frontend-alpha.vercel.app'
+]
+
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "cosmo",
+    "dark_mode_theme": "cyborg",
 }

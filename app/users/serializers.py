@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             'date_modified',
             'user_permissions',
         )
+        required_fields = ['email', 'password', 'first_name', 'last_name']
         extra_kwargs = {'password': {'write_only': True, 'min_length': 5}}
 
     def create(self, validated_data):

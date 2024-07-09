@@ -52,12 +52,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255, blank=True, help_text="Your Profession"
     )
 
-    # Pictures are coming soon
-    # picture = models.ImageField(
-    #    upload_to='profile_pics/', blank=True, null=True)
-    # background_image = models.ImageField(
-    #    upload_to='background_pics/', blank=True, null=True)
-
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 

@@ -1,15 +1,23 @@
 from django.db import models
+from django.utils.text import slugify
+from cloudinary.models import CloudinaryField
 from inventory.choices import STATUS_CHOICES, RESOURCE_TYPES
 
 
 class Category(models.Model):
     name = models.CharField(max_length=70)
+    slug = models.SlugField(unique=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -18,7 +26,7 @@ class Category(models.Model):
 class Supplier(models.Model):
     name = models.CharField(max_length=100)
     about = models.TextField(blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+    address = models.CharField(max_length=100, blank=True)
     email = models.EmailField(blank=True, null=True)
     phone_number = models.CharField(max_length=15, null=True, blank=True)
     website = models.URLField(blank=True, null=True)
@@ -33,12 +41,13 @@ class Supplier(models.Model):
 class Equipment(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category, on_delete=models.CASCADE)
     quantity = models.IntegerField()
-    main_image = models.ImageField(upload_to='equipment_images/', blank=True, null=True)
+    main_image = CloudinaryField(
+        'image', folder='fablab/equipments/images', null=True, blank=True)
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, default='not_available')
-    specifications = models.JSONField(default=list, blank=True, null=True)
+    specifications = models.JSONField(blank=True, null=True)
     potential_suppliers = models.ManyToManyField(
         Supplier, related_name='potential_suppliers', blank=True)
 
@@ -50,7 +59,8 @@ class Equipment(models.Model):
 
 
 class EquipmentImage(models.Model):
-    image = models.ImageField(upload_to='equipment_images/')
+    image = CloudinaryField(
+        'image', folder='fablab/equipments/images', null=True, blank=True)
     equipment = models.ForeignKey(
         Equipment, on_delete=models.CASCADE, related_name='images')
     created_at = models.DateTimeField(auto_now_add=True)

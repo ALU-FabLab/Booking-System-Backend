@@ -12,7 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
+# from decouple import config
 import dj_database_url
+import cloudinary
+import cloudinary.api
+import cloudinary.uploader
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,10 +31,24 @@ EMAIL_PORT = 587
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-uqt)vhr8^&j35*j%@l(0g!2xd*eqq+h6%euf2w9@l^6-!a8e02'
+# SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = config('DEBUG', default=False, cast=bool)
+
+
+SECRET_KEY = "django-insecure-uqt)vhr8 ^ &j35*j % @l(0g!2xd*eqq+h6 % euf2w9@l ^ 6 -!a8e02"
 DEBUG = True
+CLOUDINARY_CLOUD_NAME = "ds8je77fy"
+CLOUDINARY_API_KEY = "912662264167446"
+CLOUDINARY_API_SECRET = "Q3znKOrOtUlnOucEOT0Maw4Ewfc"
+
+cloudinary.config(
+    cloud_name = CLOUDINARY_CLOUD_NAME,
+    api_key= CLOUDINARY_API_KEY,
+    api_secret = CLOUDINARY_API_SECRET,
+    secure = True
+)
 
 ALLOWED_HOSTS = ["*"]
 
@@ -48,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External Apps
+    'cloudinary',
     'corsheaders',
     'rest_framework',
     'drf_spectacular',
@@ -156,6 +175,13 @@ STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.User'
+
+# cloudinary.config(
+#     cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+#     api_key=config("CLOUDINARY_API_KEY"),
+#     api_secret=config("CLOUDINARY_API_SECRET"),
+#     secure=True
+# )
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',

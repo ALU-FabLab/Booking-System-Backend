@@ -41,7 +41,7 @@ class Supplier(models.Model):
 class Equipment(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
-    categories = models.ManyToManyField(Category, on_delete=models.CASCADE)
+    categories = models.ManyToManyField(Category)
     quantity = models.IntegerField()
     main_image = CloudinaryField(
         'image', folder='fablab/equipments/images', null=True, blank=True)

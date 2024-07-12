@@ -57,7 +57,7 @@ class EquipmentAdmin(admin.ModelAdmin):
     """
     Config for Equipment Admin View
     """
-    list_display = ['id', 'name', 'category',
+    list_display = ['id', 'name',
                     'quantity', 'status', 'created_at', 'updated_at']
     search_fields = ['name', 'status']
     ordering = ['id']
@@ -69,7 +69,7 @@ class EquipmentAdmin(admin.ModelAdmin):
                 'fields': (
                     'name',
                     'description',
-                    'category',
+                    'categories',
                     'quantity',
                     'main_image',
                     'status',

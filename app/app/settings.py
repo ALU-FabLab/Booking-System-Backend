@@ -10,10 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from dotenv import load_dotenv
+from os import getenv
 import os
 from pathlib import Path
-# from decouple import config
-import dj_database_url
+from decouple import config
+# import dj_database_url
 import cloudinary
 import cloudinary.api
 import cloudinary.uploader
@@ -21,11 +23,11 @@ import cloudinary.uploader
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'abimbolaronald@gmail.com'
-EMAIL_HOST_PASSWORD = "khse dpgj smqg dvic"
-EMAIL_PORT = 587
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST = config('EMAIL_HOST', default='smtp.gmail.com')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -37,8 +39,8 @@ EMAIL_PORT = 587
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-SECRET_KEY = "django-insecure-uqt)vhr8 ^ &j35*j % @l(0g!2xd*eqq+h6 % euf2w9@l ^ 6 -!a8e02"
-DEBUG = True
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 CLOUDINARY_CLOUD_NAME = "ds8je77fy"
 CLOUDINARY_API_KEY = "912662264167446"
 CLOUDINARY_API_SECRET = "Q3znKOrOtUlnOucEOT0Maw4Ewfc"
@@ -127,8 +129,19 @@ if DEBUG:
     }
 else:
     DATABASES = {
-        'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config('PGDATABASE'),
+            'USER': config('PGUSER'),
+            'PASSWORD': config('PGPASSWORD'),
+            'HOST': config('PGHOST'),
+            'PORT': config('PGPORT', 5432),
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
     }
+    }
+
 
 
 # Password validation

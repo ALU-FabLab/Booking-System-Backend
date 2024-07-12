@@ -27,3 +27,4 @@ uritemplate==4.1.1
 whitenoise==6.5.0
 django-jazzmin
 docutils
+python-decouple==3.8

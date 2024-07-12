@@ -34,4 +34,5 @@ ENV PATH="/py/bin:$PATH"
 USER django-user
 
 # Run migrations and collect static files
-CMD python manage.py migrate && python manage.py collectstatic --noinput && gunicorn app.wsgi:application --bind 0.0.0.0:$PORT
+# CMD python manage.py migrate && python manage.py collectstatic --noinput && gunicorn app.wsgi:application --bind 0.0.0.0:$PORT
+CMD python manage.py migrate && gunicorn app.wsgi:application --bind 0.0.0.0:$PORT

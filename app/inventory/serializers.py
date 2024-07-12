@@ -78,6 +78,7 @@ class EquipmentImageSerializer(ModelSerializer):
 class EquipmentSerializer(ModelSerializer):
     images = EquipmentImageSerializer(
         many=True, read_only=True, required=False)
+    categories = CategorySerializer(many=True, read_only=True)
 
     class Meta:
         model = Equipment
@@ -85,7 +86,7 @@ class EquipmentSerializer(ModelSerializer):
             'id',
             'name',
             'description',
-            'category',
+            'categories',
             'quantity',
             'main_image',
             'status',

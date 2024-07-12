@@ -44,3 +44,7 @@ class UserSerializer(serializers.ModelSerializer):
             user.save()
 
         return user
+
+
+class ActivateAccountSerializer(serializers.Serializer):
+    pass

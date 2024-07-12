@@ -19,7 +19,7 @@ urlpatterns = [
     path('<int:pk>/', views.DetailUserView.as_view(), name='user'),
     path('profile/', views.ManageProfileView.as_view(), name='profile'),
     path(
-        'activate/<uidb64>/<token>/',
+        'activate/<str:uidb64>/<str:token>/',
         views.ActivateAccountAPIView.as_view(),
         name='activate'
     ),

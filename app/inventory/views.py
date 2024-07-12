@@ -4,7 +4,7 @@ from drf_spectacular.utils import (
     OpenApiTypes,
     OpenApiParameter,
 )
-from rest_framework import viewsets, mixins, status
+from rest_framework import viewsets, mixins, status, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.authentication import TokenAuthentication
@@ -61,7 +61,7 @@ class EquipmentViewSet(viewsets.ModelViewSet):
 
         if categories:
             categories_slugs = self._params_to_list(categories)
-            queryset = queryset.filter(category__slug__in=categories_slugs)
+            queryset = queryset.filter(categories__name__in=categories_slugs)
         # if projects:
         #     projects_slugs = self._params_to_list(projects)
         #     queryset = queryset.filter(projects__id__in=projects_slugs)
@@ -70,3 +70,11 @@ class EquipmentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save()
+
+
+class CategoriesListView(generics.ListAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = Category.objects.all()
+    # authentication_classes = [TokenAuthentication]
+    # permission_classes = [permissions.IsAuthenticated]
+    pagination_class = None

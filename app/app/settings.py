@@ -213,8 +213,3 @@ CORS_ALLOWED_ORIGINS = [
     'https://booking-system-frontend-alpha.vercel.app'
 ]
 
-
-JAZZMIN_UI_TWEAKS = {
-    "theme": "cosmo",
-    "dark_mode_theme": "cyborg",
-}

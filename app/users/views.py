@@ -3,7 +3,7 @@ Views for the user API.
 """
 from users.tokens import generate_token
 from rest_framework.views import APIView
-from users.serializers import UserSerializer
+from users.serializers import UserSerializer, ActivateAccountSerializer
 from django.shortcuts import redirect
 from django.contrib.auth import get_user_model
 from rest_framework import generics, permissions
@@ -50,6 +50,8 @@ class ManageProfileView(generics.RetrieveUpdateDestroyAPIView):
 
 
 class ActivateAccountAPIView(APIView):
+    serializer_class = ActivateAccountSerializer
+
     def get(self, request, uidb64, token):
         User = get_user_model()
         try:

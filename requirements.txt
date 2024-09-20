@@ -2,11 +2,11 @@ asgiref==3.8.1
 attrs==23.2.0
 cloudinary==1.40.0
 dj-database-url==2.1.0
-Django==4.0.10
+Django==4.2.0
 django-cors-headers==4.3.1
-djangorestframework==3.13.1
+djangorestframework==3.15.2
 djangorestframework-simplejwt==5.3.1
-drf-spectacular==0.22.1
+drf-spectacular==0.27.2
 gunicorn==22.0.0
 inflection==0.5.1
 jsonschema==4.21.1
@@ -28,3 +28,4 @@ whitenoise==6.5.0
 django-jazzmin
 docutils
 python-decouple==3.8
+django-filter==24.3

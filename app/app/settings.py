@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # External Apps
+    'django_filters',
     'cloudinary',
     'corsheaders',
     'rest_framework',
@@ -76,8 +77,10 @@ INSTALLED_APPS = [
 
     # Internal Apps
     'core',
+    'utils',
     'users',
     'bookings',
+    'projects',
     'inventory',
     'notifications',
 ]
@@ -198,6 +201,9 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
     )
 }
 

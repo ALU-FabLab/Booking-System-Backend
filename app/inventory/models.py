@@ -42,7 +42,12 @@ class Equipment(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True, null=True)
     categories = models.ManyToManyField(Category)
-    quantity = models.IntegerField()
+    quantity = models.PositiveIntegerField(
+        help_text="This is the total quantity of this equipment in the lab"
+    )
+    quantity_available = models.PositiveIntegerField(
+        help_text="This is the quantity available for booking"
+    )
     main_image = CloudinaryField(
         'image', folder='fablab/equipments/images', null=True, blank=True)
     status = models.CharField(

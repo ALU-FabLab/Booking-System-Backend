@@ -219,3 +219,4 @@ CORS_ALLOWED_ORIGINS = [
     'https://booking-system-frontend-alpha.vercel.app'
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True #! Remeber to change this to False in production
